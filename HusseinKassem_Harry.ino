@@ -1,5 +1,3 @@
-#include <Arduino.h>
-
 #define MOTOR_LEFT1 2 // +ve
 #define MOTOR_LEFT2 3 // -ve
 #define MOTOR_LEFT_SPEED 10

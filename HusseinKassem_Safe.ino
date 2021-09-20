@@ -1,5 +1,3 @@
-#include <Arduino.h>
-
 #define ENCODER1_PINA 2 // signal from channel A of encoder 1
 #define ENCODER1_PINB 3 // signal from channel B of encoder 1
 

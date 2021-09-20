@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include <Timer.h>
 #define PUSH_BUTTON 2
 #define RED_LED 9
