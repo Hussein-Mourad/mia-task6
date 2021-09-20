@@ -12,13 +12,13 @@ const unsigned long WHITE_TIME2 = 8UL * 60 * 1000;  // 8 mins in ms
 
 Timer timer;
 void ISR_Button();
-void closeRedLed();
+void turnOffRedLed();
 void blinkGreenLed();
 void blinkWhiteLed();
 
 void setup()
 {
-  attachInterrupt(digitalPinToInterrupt(PUSH_BUTTON), ISR_Button, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(PUSH_BUTTON), ISR_Button, HIGH);
 }
 
 void loop()
@@ -28,15 +28,19 @@ void loop()
 
 void ISR_Button()
 {
+  // turn on red led
   digitalWrite(RED_LED, HIGH);
-  timer.after(RED_TIMEOUT, closeRedLed);
+  // turn off red led after 15 mins
+  timer.after(RED_TIMEOUT, turnOffRedLed);
   // blinks green led every 2 mins until red comes off
   timer.every(GREEN_TIME, blinkGreenLed, RED_TIMEOUT / GREEN_TIME);
+  // flashes white led after 5 mins
   timer.after(WHITE_TIME1, blinkWhiteLed);
+  // flashes white led after 8 mins
   timer.after(WHITE_TIME2, blinkWhiteLed);
 }
 
-void closeRedLed()
+void turnOffRedLed()
 {
   digitalWrite(RED_LED, LOW);
 }

@@ -24,6 +24,7 @@ Timer timer;
 
 void setup()
 {
+  // begin i2c comunication
   Wire.begin();
   // initialization
   setImuRegister(0x6B, 0x00);

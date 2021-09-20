@@ -50,10 +50,14 @@ void setup()
 
 void loop()
 {
+  // divide the counter with the number of pulses per revolution 
+  // then multiply the value by 360 to convert it to degrees 
+  // then mod that by 360 to cap the value at 360
   deg1 = (counter1 / (PPR * 4)) * 360 % 360;
   deg2 = (counter2 / (PPR * 4)) * 360 % 360;
   deg3 = (counter3 / (PPR * 4)) * 360 % 360;
 
+  // Turn off the led according to the conditions
   if (deg1 == 37)
     digitalWrite(GREEN_LED, HIGH);
   if (deg2 == 10)
@@ -66,6 +70,7 @@ void loop()
   digitalWrite(GREEN_LED, LOW);
 }
 
+// Reads from channel a of encoder
 void channelA(long long &counter, byte signalA, byte signalB)
 {
   if (digitalRead(signalA) != digitalRead(signalB))
@@ -74,14 +79,17 @@ void channelA(long long &counter, byte signalA, byte signalB)
     counter--;
 }
 
+// Reads from channel b of encoder
 void channelB(long long &counter, byte signalA, byte signalB)
 {
   if (digitalRead(signalA) == digitalRead(signalB))
-    counter1++;
+    counter++;
   else
-    counter1--;
+    counter--;
 }
 
+// interupt functions calls channel function with appropriate arguments
+// which saves data in each encoder counter
 void ISR_A1() { channelA(counter1, ENCODER1_PINA, ENCODER1_PINB); }
 
 void ISR_B1() { channelB(counter1, ENCODER1_PINA, ENCODER1_PINB); }
