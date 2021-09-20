@@ -3,8 +3,8 @@
 #include <Timer.h>
 
 #define IMU_ADDRESS 0x68
-#define GYRO_FACTOR 2000
 #define RED_LED 10
+#define GYRO_FACTOR 2000
 
 int32_t x_accel_offset = 0, y_accel_offset = 0, z_accel_offset = 0;
 int32_t x_gyro_offset = 0, y_gyro_offset = 0, z_gyro_offset = 0;
@@ -17,14 +17,13 @@ void setImuRegister(uint8_t reg, uint8_t value);
 uint8_t readImu1Byte(uint8_t reg);
 uint8_t readImu2Bytes(uint8_t reg);
 void calibrateImu(uint32_t iterations);
-int16_t scaleValue(int16_t value, int8_t factor);
+int16_t scaleValue(int16_t value, int16_t factor);
 void handleImuData();
 
 Timer timer;
 
 void setup()
 {
-  Serial.begin(9600);
   Wire.begin();
   // initialization
   setImuRegister(0x6B, 0x00);
@@ -50,11 +49,6 @@ void handleImuData()
   // This converts deg/s to deg
   x_gyro = degrees(scaleValue(readImu2Bytes(0x43), GYRO_FACTOR)) * 100;
   y_gyro = degrees(scaleValue(readImu2Bytes(0x45), GYRO_FACTOR)) * 100;
-
-  Serial.print("x gyro: ");
-  Serial.println(x_gyro);
-  Serial.print("y gyro: ");
-  Serial.println(y_gyro);
 
   // If the roll or the pitch exceeds 60 deg flash the red light
   if (abs(x_gyro) >= 60 || abs(y_gyro) >= 60)
@@ -119,7 +113,7 @@ void calibrateImu(uint32_t iterations)
   z_gyro_offset /= iterations;
 }
 
-int16_t scaleValue(int16_t value, int8_t factor)
+int16_t scaleValue(int16_t value, int16_t factor)
 {
   return (value * factor) / 32.767;
 }
