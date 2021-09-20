@@ -1,31 +1,13 @@
-#include <Arduino.h>
-#include <Wire.h>
-#include <Timer.h>
+# RonBroomStick
 
-#define IMU_ADDRESS 0x68
-#define RED_LED 10
-#define GYRO_FACTOR 2000
-
-int32_t x_accel_offset = 0, y_accel_offset = 0, z_accel_offset = 0;
-int32_t x_gyro_offset = 0, y_gyro_offset = 0, z_gyro_offset = 0;
-
-int16_t x_gyro = 0, y_gyro = 0, z_gyro = 0;
-
-int8_t event;
-
-void setImuRegister(uint8_t reg, uint8_t value);
-uint8_t readImu1Byte(uint8_t reg);
-uint8_t readImu2Bytes(uint8_t reg);
-void calibrateImu(uint32_t iterations);
-int16_t scaleValue(int16_t value, int16_t factor);
-void handleImuData();
-
-Timer timer;
-
+- Begin i2c communication
+- Initialize Imu
+-  
 void setup()
 {
+  // we beging i2c communication
   Wire.begin();
-  // initialization
+  // imu initialization
   setImuRegister(0x6B, 0x00);
   // accelerometer configuration 16g
   setImuRegister(0x1C, 0x18);
@@ -36,12 +18,9 @@ void setup()
   // request the imu data every 100 ms
   timer.every(100, handleImuData);
 }
+```
 
-void loop()
-{
-  timer.update();
-}
-
+```cpp
 void handleImuData()
 {
   // Get the value from the sensor, scale it, convert from rad/s to deg/s
@@ -117,3 +96,4 @@ int16_t scaleValue(int16_t value, int16_t factor)
 {
   return (value * factor) / 32.767;
 }
+```
