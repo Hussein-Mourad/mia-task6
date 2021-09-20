@@ -4,10 +4,11 @@
 #define RED_LED 9
 #define GREEN_LED 8
 #define WHITE_LED 7
-#define RED_TIMEOUT 15 * 60 * 1000 // 15 mins in ms
-#define GREEN_TIME 2 * 60 * 1000   // 2 mins in ms
-#define WHITE_TIME1 5 * 60 * 1000  // 5 mins in ms
-#define WHITE_TIME2 8 * 60 * 1000  // 8 mins in ms
+
+const unsigned long RED_TIMEOUT = 15UL * 60 * 1000; // 15 mins in ms
+const unsigned long GREEN_TIME = 2UL * 60 * 1000;   // 2 mins in ms
+const unsigned long WHITE_TIME1 = 5UL * 60 * 1000;  // 5 mins in ms
+const unsigned long WHITE_TIME2 = 8UL * 60 * 1000;  // 8 mins in ms
 
 Timer timer;
 void ISR_Button();
